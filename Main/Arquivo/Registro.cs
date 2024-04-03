@@ -9,6 +9,7 @@ namespace Main.Arquivo
     {
         int ID {get; set;}
         void FromByteArray(byte[] registro);
+        byte[] ToByteArray();
         new int CompareTo(object registro);
         new object Clone();
 

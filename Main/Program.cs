@@ -6,7 +6,7 @@ Arquivo<Registro> arquivo = new Arquivo<Registro>(constructor);
 
 var objeto = new RegistroEntrance();
 
-objeto.ID = 2012301230;
+objeto.ID = 1;
 objeto.Nome = "Matheus";
 objeto.Sobrenome = "Fagundes";
 

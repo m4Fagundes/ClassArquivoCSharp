@@ -16,22 +16,22 @@ namespace Main.Arquivo
         protected readonly int TAM_CABECALHO = 4;
 
 
-        static byte[] toByteArray(T obj)
-        {
-            if(obj == null)
-            return null;
+        // static byte[] toByteArray(T obj)
+        // {
+        //     if(obj == null)
+        //     return null;
 
 
-            byte[] bytesID = BitConverter.GetBytes(obj.ID);
-            string objectString = obj.ToString();
+        //     byte[] bytesID = BitConverter.GetBytes(obj.ID);
+        //     string objectString = obj.ToString();
             
 
 
-            byte[] byteObjeto = Encoding.UTF8.GetBytes(objectString);
+        //     byte[] byteObjeto = Encoding.UTF8.GetBytes(objectString);
 
-            return byteObjeto;
+        //     return byteObjeto;
             
-        }
+        // }
 
         public Arquivo(ConstructorInfo constructor)
         {
@@ -72,11 +72,11 @@ namespace Main.Arquivo
 
             arquivo.Seek(0, SeekOrigin.End);
             long endereco = arquivo.Position;
-            byte[] registro =  toByteArray(obj);
+            byte[] registro =  obj.ToByteArray();
             short tam = (short) registro.Length;
             byte[] tamByte = BitConverter.GetBytes(tam);
             arquivo.WriteByte(32); //Codigo ASCII do espaco em branco  
-            arquivo.Write(tamByte, 0, 2);
+            arquivo.Write(tamByte, 0, 1);
             arquivo.Write(registro, 0, registro.Length);
             arquivo.Flush();
             arquivo.Close();
@@ -96,6 +96,4 @@ namespace Main.Arquivo
         }
 
     }
-
-    
 }

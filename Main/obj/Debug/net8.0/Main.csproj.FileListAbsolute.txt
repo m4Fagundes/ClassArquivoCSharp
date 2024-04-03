@@ -12,3 +12,4 @@
 /Users/m4fagundes/Documents/ClassArquivoC#/Main/obj/Debug/net8.0/Main.pdb
 /Users/m4fagundes/Documents/ClassArquivoC#/Main/obj/Debug/net8.0/Main.genruntimeconfig.cache
 /Users/m4fagundes/Documents/ClassArquivoC#/Main/obj/Debug/net8.0/ref/Main.dll
+/Users/m4fagundes/Documents/ClassArquivoC#/Main/obj/Debug/net8.0/Main.sourcelink.json
