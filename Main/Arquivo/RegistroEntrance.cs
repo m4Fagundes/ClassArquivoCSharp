@@ -44,11 +44,6 @@ namespace Main.Arquivo
             listaBytes.AddRange(byteSobrenome);
 
             byte[] registro = listaBytes.ToArray();
-
-            foreach(byte b in registro)
-            {
-                Console.Write(b + " ");
-            }
             return registro;
         }
 

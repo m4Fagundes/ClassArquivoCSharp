@@ -11,3 +11,4 @@ objeto.Nome = "Matheus";
 objeto.Sobrenome = "Fagundes";
 
 arquivo.Create(objeto);
+arquivo.Delete(1);

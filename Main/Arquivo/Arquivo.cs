@@ -79,21 +79,39 @@ namespace Main.Arquivo
             arquivo.Write(tamByte, 0, 1);
             arquivo.Write(registro, 0, registro.Length);
             arquivo.Flush();
-            arquivo.Close();
 
             Console.WriteLine("O Registro foi salvo com sucesso");
 
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
+            try
+            {
+                arquivo.Seek(0, SeekOrigin.Begin);
+                byte[] intBuffer = new byte[sizeof(int)];
+                arquivo.Read(intBuffer, 0, sizeof(int));
 
+                int quantidadeRegistro = BitConverter.ToInt32(intBuffer, 0);
+
+                arquivo.Seek(4, SeekOrigin.Begin);
+
+                
+
+                
+            } catch (Exception e)
+            {
+                Console.WriteLine("Ocorreu uma excenssao: " + e);
+            }
             
 
-
-
-            return false;
         }
 
     }
 }
+
+
+            // foreach(byte b in intBuffer)
+            // {
+            //     Console.WriteLine(b + " ");
+            // }
