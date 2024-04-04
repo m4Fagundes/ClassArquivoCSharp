@@ -106,15 +106,12 @@ namespace Main.Arquivo
                         
                         //le a lapide
                         byte lapide = (byte) arquivo.ReadByte();
-                        Console.WriteLine(lapide);  
 
                         //le o tamanho do registro
                         short tamanhoReg = reader.ReadInt16();
-                        Console.WriteLine(tamanhoReg);
 
                         //grava o indice do registro pra comparacao
                         int indice = reader.ReadInt32();
-                        Console.WriteLine(indice);
 
                         if(indice == id)
                         {
@@ -128,7 +125,6 @@ namespace Main.Arquivo
                             arquivo.Seek(tamanhoReg-4, SeekOrigin.Current);
 
                         }
-                        Console.WriteLine("Aq acabou!!");
                     }
                 } 
             } catch (Exception e)
