@@ -13,10 +13,10 @@ objeto.Sobrenome = "Fagundes";
 
 objeto2.ID = 2;
 objeto2.Nome = "Luca";
-objeto2.Sobrenome = "Lorenso";
+objeto2.Sobrenome = "Lorensco";
 
 
-// arquivo.Create(objeto);
-// arquivo.Create(objeto2);
+arquivo.Create(objeto);
+arquivo.Create(objeto2);
 
 arquivo.Delete(2);

@@ -73,10 +73,20 @@ namespace Main.Arquivo
             */
 
             arquivo.Seek(0, SeekOrigin.End);
-            long endereco = arquivo.Position;
-            byte[] registro =  obj.ToByteArray();
-            short tam = (short) registro.Length;
-            byte[] tamByte = BitConverter.GetBytes(tam);
+
+            long espacoVazio = -1;  // valor padrao no campo de armazenagem de um endereco que indica registro deletado
+            byte[] espacoVazilByte = BitConverter.GetBytes(espacoVazio);
+
+            long endereco = arquivo.Position; //TODO indici direto para ser feito
+
+            byte[] registro =  obj.ToByteArray();  //tranforma o objeto de entrada em um registro a ser armazenado no arquivo
+
+            short tam = (short) registro.Length; // tamanho do registro para que consiga le-lo
+            byte[] tamByte = BitConverter.GetBytes(tam); 
+
+
+            //escrita dos dados a cima
+            arquivo.Write(espacoVazilByte, 0, 8);
             arquivo.WriteByte(32); //Codigo ASCII do espaco em branco  
             arquivo.Write(tamByte, 0, tamByte.Length);
             arquivo.Write(registro, 0, registro.Length);
@@ -102,18 +112,25 @@ namespace Main.Arquivo
                 {
                     while(arquivo.Position < tamanhoArquivo)
                     {
-                        long endereco = arquivo.Position;
                         
+                        long espacoVazil = reader.ReadInt64(); //campo que armazenara o ponteiro de um regisro deletado
+                        Console.WriteLine(espacoVazil);
+                        
+                        long endereco = arquivo.Position;
+
+
                         //le a lapide
-                        byte lapide = (byte) arquivo.ReadByte();
+                        byte lapide = (byte) arquivo.ReadByte(); //campo que marca se um registo e valido ou nao
+                        Console.WriteLine(lapide);
 
                         //le o tamanho do registro
-                        short tamanhoReg = reader.ReadInt16();
+                        short tamanhoReg = reader.ReadInt16(); // comapo de indica o tamanho do registro
+                        Console.WriteLine(tamanhoReg);
 
                         //grava o indice do registro pra comparacao
-                        int indice = reader.ReadInt32();
+                        int indice = reader.ReadInt32(); //leitura do incie, dentro do registro (int na primeira posicao do registro)
 
-                        if(indice == id)
+                        if(indice == id) //achou o registro para ser deletado marca lapide com *, delentando logicamente
                         {
                             arquivo.Seek(endereco, SeekOrigin.Begin);
                             arquivo.WriteByte(42);
@@ -122,7 +139,7 @@ namespace Main.Arquivo
                         }
                         else
                         {
-                            arquivo.Seek(tamanhoReg-4, SeekOrigin.Current);
+                            arquivo.Seek(tamanhoReg-4, SeekOrigin.Current); //caso nao ache o registro pula ele e verifica o proximo na poxima excucao do while
 
                         }
                     }
@@ -137,9 +154,3 @@ namespace Main.Arquivo
 
     }
 }
-
-
-            // foreach(byte b in intBuffer)
-            // {
-            //     Console.WriteLine(b + " ");
-            // }
