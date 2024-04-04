@@ -14,7 +14,7 @@ namespace Main.Arquivo
         protected ConstructorInfo constructor;
         private Func<RegistroEntrance> value;
         protected readonly int TAM_CABECALHO = 4;
-
+        
 
         // static byte[] toByteArray(T obj)
         // {
@@ -32,6 +32,8 @@ namespace Main.Arquivo
         //     return byteObjeto;
             
         // }
+
+
 
         public Arquivo(ConstructorInfo constructor)
         {
@@ -76,7 +78,7 @@ namespace Main.Arquivo
             short tam = (short) registro.Length;
             byte[] tamByte = BitConverter.GetBytes(tam);
             arquivo.WriteByte(32); //Codigo ASCII do espaco em branco  
-            arquivo.Write(tamByte, 0, 1);
+            arquivo.Write(tamByte, 0, tamByte.Length);
             arquivo.Write(registro, 0, registro.Length);
             arquivo.Flush();
 
@@ -88,17 +90,43 @@ namespace Main.Arquivo
         {
             try
             {
-                arquivo.Seek(0, SeekOrigin.Begin);
-                byte[] intBuffer = new byte[sizeof(int)];
-                arquivo.Read(intBuffer, 0, sizeof(int));
-
-                int quantidadeRegistro = BitConverter.ToInt32(intBuffer, 0);
-
-                arquivo.Seek(4, SeekOrigin.Begin);
-
+                arquivo.Seek(TAM_CABECALHO, SeekOrigin.Begin);
                 
-
+                long tamanhoArquivo = arquivo.Length;
                 
+                using (BinaryReader reader = new BinaryReader(arquivo))
+                {
+                    while(arquivo.Position < tamanhoArquivo)
+                    {
+                        long endereco = arquivo.Position;
+                        
+                        //le a lapide
+                        byte lapide = (byte) arquivo.ReadByte();
+                        Console.WriteLine(lapide);  
+
+                        //le o tamanho do registro
+                        short tamanhoReg = reader.ReadInt16();
+                        Console.WriteLine(tamanhoReg);
+
+                        //grava o indice do registro pra comparacao
+                        int indice = reader.ReadInt32();
+                        Console.WriteLine(indice);
+
+                        if(indice == id)
+                        {
+                            arquivo.Seek(endereco, SeekOrigin.Begin);
+                            arquivo.WriteByte(42);
+                            arquivo.Flush();
+                            break;
+                        }
+                        else
+                        {
+                            arquivo.Seek(tamanhoReg-4, SeekOrigin.Current);
+
+                        }
+                        Console.WriteLine("Aq acabou!!");
+                    }
+                } 
             } catch (Exception e)
             {
                 Console.WriteLine("Ocorreu uma excenssao: " + e);
