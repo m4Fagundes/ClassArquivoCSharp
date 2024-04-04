@@ -88,6 +88,10 @@ namespace Main.Arquivo
 
         public void Delete(int id)
         {
+            /*
+            * Nesse codigo iremos pegar o tamanho do arquivo e percorre o ponteiro de
+            * posicao em posicao, primeiro nos metadados do registo e em seguida o id
+            */
             try
             {
                 arquivo.Seek(TAM_CABECALHO, SeekOrigin.Begin);
